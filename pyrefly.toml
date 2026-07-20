@@ -1,2 +1,5 @@
+disable-search-path-heuristics = true
+search-path = [".", "./.venv/Lib/site-packages"]
+
 [analysis]
-extraPaths = ["./.venv/Lib/site-packages"]
+extraPaths = ["./.venv/Lib/site-packages", "."]

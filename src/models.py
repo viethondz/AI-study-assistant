@@ -2,7 +2,7 @@
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from database import Base
+from src.database import Base
 
 class Document(Base):
     __tablename__ = "documents" # Tên bảng trong DB
