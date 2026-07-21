@@ -12,6 +12,10 @@ load_dotenv(override=True)
 api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 client = genai.Client(api_key=api_key)
 
+# Model name — dùng alias 'gemini-flash-latest' để luôn trỏ tới flash model mới nhất khả dụng.
+# Đổi thành 'gemini-pro-latest' nếu muốn dùng model mạnh hơn.
+MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-flash-latest")
+
 # 1. HÀM ĐỌC FILE (Giữ nguyên logic cũ của bạn)
 def extract_text_from_file(file):
     try:
@@ -34,7 +38,7 @@ def call_gemini_to_summarize(text_content: str) -> str:
     
     # Chuẩn gọi model mới: client.models.generate_content
     response = client.models.generate_content(
-        model='gemini-2.0-flash-lite',
+        model=MODEL_NAME,
         contents=prompt,
     )
     return response.text or "Không thể lấy nội dung tóm tắt."
@@ -45,7 +49,7 @@ def call_gemini_to_generate_quiz(text_content: str) -> list:
         return []
         
     prompt = (
-        "Dựa vào nội dung sau, hãy tạo ra 30 câu hỏi trắc nghiệm bằng Tiếng Việt. "
+        "Dựa vào nội dung sau, hãy tạo ra 20 câu hỏi trắc nghiệm bằng Tiếng Việt. "
         "Trả về kết quả dưới dạng một mảng JSON duy nhất, không kèm theo bất kỳ chữ giải thích nào khác ngoài JSON.\n"
         "Cấu trúc JSON:\n"
         "[\n"
@@ -61,7 +65,7 @@ def call_gemini_to_generate_quiz(text_content: str) -> list:
     full_content = f"{prompt}\n\n{text_content}"
     
     response = client.models.generate_content(
-        model='gemini-2.0-flash-lite',
+        model=MODEL_NAME,
         contents=full_content,
         config=types.GenerateContentConfig(
             response_mime_type="application/json"

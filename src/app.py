@@ -95,7 +95,7 @@ if "current_doc_id" in st.session_state and st.session_state.current_doc_id:
     # CỘT 2: TRẮC NGHIỆM QUIZ
     with col2:
         st.subheader("🧠 Thử thách Trắc nghiệm (Quiz)")
-        if st.button("🎲 Tạo bộ 5 câu hỏi mới"):
+        if st.button("🎲 Tạo bộ 20 câu hỏi mới"):
             with st.spinner("Gemini đang soạn câu hỏi..."):
                 try:
                     res = requests.post(f"{BACKEND_URL}/api/documents/{doc_id}/quiz")
